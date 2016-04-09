@@ -7,11 +7,18 @@ use App\Photo;
 use App\Http\Requests;
 use App\Http\Utilities\Country; //created a ultility class to hold all countries
 use App\Http\Requests\FlyerRequest;
-use App\Flyer; 
- 
+use App\Flyer;
+use Auth;  
 
 class FlyersController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth'); 
+
+    }
+
     /**
      * Display a listing of the resource.
      *

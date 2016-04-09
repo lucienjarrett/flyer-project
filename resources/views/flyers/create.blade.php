@@ -1,6 +1,6 @@
 
 
-@extends('layout')
+@extends('layouts.app')
 @section('content')
 <h1>Selling Your Home?</h1>
 <hr>

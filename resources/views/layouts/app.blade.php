@@ -9,11 +9,13 @@
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> -->
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
 
     <style>
         body {
@@ -47,7 +49,9 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                     <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -78,5 +82,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+<script src="/js/libs.js"></script>
+
+@yield('scripts.footer')
+@include('flash')
+    
 </body>
 </html>
