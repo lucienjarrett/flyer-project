@@ -1,3 +1,4 @@
+@include('flash')
 <div class="rows">
 	<div class="col-md-6">
 

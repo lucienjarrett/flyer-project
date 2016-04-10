@@ -9,6 +9,9 @@ use App\Http\Utilities\Country; //created a ultility class to hold all countries
 use App\Http\Requests\FlyerRequest;
 use App\Flyer;
 use Auth;  
+use App\Http\Flash;
+
+
 
 class FlyersController extends Controller
 {
@@ -38,6 +41,7 @@ class FlyersController extends Controller
     {
         $countries = Country::all(); 
 
+        flash()->success('Success!','Flyer successfully created');
         return view('flyers.create', compact('countries'));   
     }
 
@@ -53,10 +57,14 @@ class FlyersController extends Controller
         $countries = Country::all(); 
 
         
+        
+
         Flyer::create($request->all());
 
-        flash()->success('Success!','Flyer successfully created'); 
+ 
+       flash()->success('Success!','Flyer successfully created');
         return redirect()->back();
+        
     }
 
     /**
@@ -89,13 +97,7 @@ class FlyersController extends Controller
             'photo' => 'required|mimes:jpeg,jpg,bmp,png'
             ]);
         
-
-
-
         $photo = Photo::fromForm($request->file('photo'));         
-        
-                
-
         Flyer::locatedAt($zip, $street)->addPhoto($photo);
  
         return "Done"; 

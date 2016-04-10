@@ -10,7 +10,6 @@
 
 </head>
 <body>
-
 @include('flash')
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -59,7 +58,6 @@
 
 </div>
 <script src="/js/libs.js"></script>
-
 @yield('scripts.footer')
 @include('flash')
 

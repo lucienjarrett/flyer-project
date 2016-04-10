@@ -5753,9 +5753,12 @@ button.close {
   height: 39px; }
 
 body {
-  padding-top: 70px; }
+  padding-top: 0px; }
 
 img {
   max-width: 100%; }
+
+.form-control {
+  height: 39px; }
 
 /*# sourceMappingURL=app.css.map */
