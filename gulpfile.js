@@ -17,12 +17,14 @@ elixir(function(mix) {
     mix.scripts([
         'libs/sweetalert-dev.js',
         'libs/jquery.min.js'
+        //'libs/dropzone.js',
     ], './public/js/libs.js');
 
     mix.styles([
 
         'libs/sweetalert.css',
         'libs/font-awesome.min.css'
+        //'libs/dropzone.css'
     ], './public/css/libs.css');
 
 });

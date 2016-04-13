@@ -14,12 +14,16 @@ class CreateFlyerPhotosTable extends Migration
     {
         Schema::create('flyer_photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('flyer_id', false, true)->lenght(10);
+        
+            $table->integer('flyer_id', false, true)->length(10);
             $table->string('path');  
             $table->foreign('flyer_id')
                   ->references('id')
                   ->on('flyers')
                   ->onDelete('cascade');
+            $table->string('name');
+
+            $table->string('thumbnail_path');       
             $table->timestamps();
         });
     }

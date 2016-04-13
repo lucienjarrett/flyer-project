@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flyer extends Model
 {
-    protected $fillable = array('street', 'state', 'city', 'price', 'description', 'zip', 'country');
+    protected $fillable = array('street', 'state', 'city', 'price', 'description', 'zip', 'country', 'user_id');
     
 
     /**
@@ -29,7 +29,8 @@ class Flyer extends Model
     public static function locatedAt( $zip, $street)
     {
     	$street = trim(str_replace('-', ' ', $street)); 
-    	return static::where(compact('zip', 'street'))->first(); 
+    	
+        return static::where(compact('zip', 'street'))->firstOrFail(); 
 
     }
 
@@ -48,6 +49,28 @@ class Flyer extends Model
     {
     
         return $this->photos()->save($photo); 
+    }
+
+    /**
+     * [user description]
+     * @return namespace Illuminate\Database\Eloquent\Relations\BelongsTo;
+     */
+    public function owner()
+    {
+        return $this->belongsTo('App\User', 'user_id');  
+
+    }
+
+    
+    /**
+     * Determine if the giev user created the flyer. 
+     * @param  User   $user [description]
+     * @return [boolean]       [description]
+     */
+    public function ownedBy(User $user)
+    {
+        
+        return $this->user_id == $user->id; 
     }
 
  }

@@ -10,15 +10,20 @@ use App\Http\Requests\FlyerRequest;
 use App\Flyer;
 use Auth;  
 use App\Http\Flash;
+use Symfony\Component\HttpFoundation\File\UploadedFile; 
+use App\User; 
+use App\Http\Requests\ChangeFlyerRequest; 
 
 
 
 class FlyersController extends Controller
 {
     
+    //use AuthorizesUsers; 
+
     public function __construct()
     {
-        $this->middleware('auth'); 
+        $this->middleware('auth', ['except'=>'show']); 
 
     }
 
@@ -54,19 +59,21 @@ class FlyersController extends Controller
     public function store(FlyerRequest $request)
     {
 
+
+        $user = Auth::user();
+
         $countries = Country::all(); 
 
-        
-        
+         Auth::user()->flyers()->create($request->all()); 
+       // Flyer::create($request->all()); 
 
-        Flyer::create($request->all());
+
 
  
        flash()->success('Success!','Flyer successfully created');
         return redirect()->back();
         
     }
-
     /**
      * Scope query to those located at the given address..
      * @param Builder $query
@@ -89,18 +96,47 @@ class FlyersController extends Controller
      * @param [type]  $street  [description]
      * @param Request $request [description]
      */
-    public function addPhoto($zip, $street, Request $request)
+    public function addPhoto($zip, $street, ChangeFlyerRequest $request)
     {
 
+        $photo = $this->makePhoto($request->file('photo')); 
 
-        $this->validate($request, [
-            'photo' => 'required|mimes:jpeg,jpg,bmp,png'
-            ]);
-        
-        $photo = Photo::fromForm($request->file('photo'));         
-        Flyer::locatedAt($zip, $street)->addPhoto($photo);
+        Flyer::locatedAt($zip, $street)->addPhoto($photo); 
  
-        return "Done"; 
+    }
+
+
+    // public function userCreatedFlyer($request)
+    // {
+    //     $user = Auth::user();
+
+    //     return $f = Flyer::where([
+    //         'zip'=> $request->zip, 
+    //         'street' => $request->street, 
+    //         'user_id' => $user->id 
+
+    //         ])->exists(); 
+    //     echo $f; 
+    // }
+
+    // protected function unathorized(Request $request)
+    // {
+
+    //      if($request->ajax())
+    //         {
+    //             return response(['message'=>'No way'], 403); 
+    //         }
+    //         flash('no way'); 
+
+    //         return redirect('/');
+    // }
+
+    public function makePhoto(UploadedFile $file)
+    {
+       
+
+         return Photo::named($file->getClientOriginalName())
+         ->move($file);
     }
 
     /**

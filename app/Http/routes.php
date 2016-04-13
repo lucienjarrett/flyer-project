@@ -28,7 +28,7 @@ Route::controllers
 
     Route::auth();
 
-    //Route::get('/pages/home', 'HomeController@index');
+   Route::get('/pages/home', 'HomeController@index');
 Route::get('/', function () {
     return view('pages.home');
 });
