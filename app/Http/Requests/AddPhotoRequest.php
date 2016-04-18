@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use App\Flyer; 
 
+
 class AddPhotoRequest extends Request
 {
     /**
@@ -14,6 +15,8 @@ class AddPhotoRequest extends Request
      */
     public function authorize()
     {
+
+
         return Flyer::where([
             'zip' => $this->zip, 
             'street' => $this->street,

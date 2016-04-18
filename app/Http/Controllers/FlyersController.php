@@ -80,8 +80,6 @@ class FlyersController extends Controller
         $flyer = Flyer::locatedAt($zip, $street);
         $user = Auth::user(); 
 
-        
-
         return view('flyers.show', compact('flyer', 'user')); 
 
     }
