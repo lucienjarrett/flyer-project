@@ -22,17 +22,15 @@
 		<img src="/{{ $photo->thumbnail_path}}" alt=""> 
 		</div>
 		@endforeach
-
+{{ var_dump($user)}}
 	</div>
 
 @endforeach
 
-</div>
-</div>
+@if($user && $user->owns($flyer))
+
 
 <hr>
-
-<h2>Add Your Photos Here</h2>
 
 <form 	id="addPhotosForm" 
 		action="{{ route ('store_photo_path', [$flyer->zip, $flyer->street]) }}"
@@ -40,7 +38,14 @@
 		method="POST">
 	{{ csrf_field() }}
 </form>
+@endif
 @stop
+</div>
+</div>
+
+
+
+
 
 @section('scripts.footer')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>

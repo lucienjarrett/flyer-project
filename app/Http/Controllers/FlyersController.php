@@ -10,9 +10,9 @@ use App\Http\Requests\FlyerRequest;
 use App\Flyer;
 use Auth;  
 use App\Http\Flash;
-use Symfony\Component\HttpFoundation\File\UploadedFile; 
+//use Symfony\Component\HttpFoundation\File\UploadedFile; 
 use App\User; 
-use App\Http\Requests\ChangeFlyerRequest; 
+use App\Http\Requests\AddPhotoRequest; 
 
 
 
@@ -46,7 +46,7 @@ class FlyersController extends Controller
     {
         $countries = Country::all(); 
 
-        flash()->success('Success!','Flyer successfully created');
+        //flash()->success('Success!','Flyer successfully created');
         return view('flyers.create', compact('countries'));   
     }
 
@@ -58,20 +58,14 @@ class FlyersController extends Controller
      */
     public function store(FlyerRequest $request)
     {
-
-
         $user = Auth::user();
-
-        $countries = Country::all(); 
-
-         Auth::user()->flyers()->create($request->all()); 
-       // Flyer::create($request->all()); 
-
-
-
+        
+        $flyer = $user->publish(
+            new Flyer($request->all())
+            ); 
  
        flash()->success('Success!','Flyer successfully created');
-        return redirect()->back();
+       return redirect(flyer_path($flyer));
         
     }
     /**
@@ -84,8 +78,11 @@ class FlyersController extends Controller
     {
         
         $flyer = Flyer::locatedAt($zip, $street);
+        $user = Auth::user(); 
 
-        return view('flyers.show', compact('flyer')); 
+        
+
+        return view('flyers.show', compact('flyer', 'user')); 
 
     }
 
@@ -96,48 +93,16 @@ class FlyersController extends Controller
      * @param [type]  $street  [description]
      * @param Request $request [description]
      */
-    public function addPhoto($zip, $street, ChangeFlyerRequest $request)
+    public function addPhoto($zip, $street, AddPhotoRequest $request)
     {
 
-        $photo = $this->makePhoto($request->file('photo')); 
+        $photo = Photo::fromFile($request->file('photo')); 
 
         Flyer::locatedAt($zip, $street)->addPhoto($photo); 
- 
+
     }
 
 
-    // public function userCreatedFlyer($request)
-    // {
-    //     $user = Auth::user();
-
-    //     return $f = Flyer::where([
-    //         'zip'=> $request->zip, 
-    //         'street' => $request->street, 
-    //         'user_id' => $user->id 
-
-    //         ])->exists(); 
-    //     echo $f; 
-    // }
-
-    // protected function unathorized(Request $request)
-    // {
-
-    //      if($request->ajax())
-    //         {
-    //             return response(['message'=>'No way'], 403); 
-    //         }
-    //         flash('no way'); 
-
-    //         return redirect('/');
-    // }
-
-    public function makePhoto(UploadedFile $file)
-    {
-       
-
-         return Photo::named($file->getClientOriginalName())
-         ->move($file);
-    }
 
     /**
      * Show the form for editing the specified resource.
