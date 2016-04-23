@@ -20,6 +20,8 @@ class Flash {
 			]); 
 	}
 
+
+
 	/**
 	 * return info flash message
 	 * @param  [type] $title   [description]

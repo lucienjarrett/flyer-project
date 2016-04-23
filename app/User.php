@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Flyer; 
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
