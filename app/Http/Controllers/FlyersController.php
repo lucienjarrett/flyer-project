@@ -12,8 +12,8 @@ use Auth;
 use App\Http\Flash;
 //use Symfony\Component\HttpFoundation\File\UploadedFile; 
 use App\User; 
-use App\Http\Requests\AddPhotoRequest; 
-
+// use App\Http\Requests\AddPhotoRequest; 
+use Session; 
 
 
 class FlyersController extends Controller
@@ -46,7 +46,8 @@ class FlyersController extends Controller
     {
         $countries = Country::all(); 
 
-        //flash()->success('Success!','Flyer successfully created');
+
+        //dd(flash()->success('Success!','Flyer successfully created'));
         return view('flyers.create', compact('countries'));   
     }
 
@@ -60,10 +61,10 @@ class FlyersController extends Controller
     {
         $user = Auth::user();
         
-        $flyer = $user->publish(
-            new Flyer($request->all())
-            ); 
+        $flyer = $this->$user->publish(
+            new Flyer($request->all())); 
  
+
        flash()->success('Success!','Flyer successfully created');
        return redirect(flyer_path($flyer));
         
@@ -76,27 +77,15 @@ class FlyersController extends Controller
      */
     public function show($zip, $street)
     {
-        
-        $flyer = Flyer::locatedAt($zip, $street);
+ 
+
+       $flyer = Flyer::locatedAt($zip, $street);
+
         $user = Auth::user(); 
 
         return view('flyers.show', compact('flyer', 'user')); 
+        //return view('flyers.show', compact('flyer', 'user')); 
 
-    }
-
-
-    /**
-     * [addPhoto description]
-     * @param [type]  $zip     [description]
-     * @param [type]  $street  [description]
-     * @param Request $request [description]
-     */
-    public function addPhoto($zip, $street, AddPhotoRequest $request)
-    {
-
-        $photo = Photo::fromFile($request->file('photo')); 
-
-        Flyer::locatedAt($zip, $street)->addPhoto($photo); 
 
     }
 

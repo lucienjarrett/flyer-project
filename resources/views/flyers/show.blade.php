@@ -22,7 +22,7 @@
 		<img src="/{{ $photo->thumbnail_path}}" alt=""> 
 		</div>
 		@endforeach
-{{ var_dump($user)}}
+
 	</div>
 
 @endforeach
